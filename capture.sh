@@ -28,7 +28,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "Options:"
             echo "  --window NAME   Capture a specific window by name"
-            echo "  --output PATH   Save screenshot to this path (default: /tmp/linux-desktop-capture-TIMESTAMP.png)"
+            echo "  --output PATH   Save screenshot to this path (default: /tmp/peekaboox-capture-TIMESTAMP.png)"
             echo "  --json          Output result as JSON"
             exit 0
             ;;
@@ -51,7 +51,7 @@ fi
 
 # --- Default output path ---
 if [ -z "$OUTPUT" ]; then
-    OUTPUT="/tmp/linux-desktop-capture-$(date +%s).png"
+    OUTPUT="/tmp/peekaboox-capture-$(date +%s).png"
 fi
 
 # --- Capture ---
