@@ -11,11 +11,11 @@ bash install.sh
 
 ## Test 1: See What's on Screen
 
-Take a screenshot, then describe what you see:
+Take a screenshot, then look at the image yourself to understand what's on screen:
 
 ```bash
 SHOT=$(bash capture.sh | tail -1)
-python3 vision.py --image "$SHOT" --describe
+# Now read the image file at $SHOT using your vision to see the desktop
 ```
 
 ## Test 2: List Open Windows
@@ -32,12 +32,12 @@ bash inspect.sh --window "<name from list>"
 
 ## Test 3: Click Something
 
-Use vision to find an element, then click it:
+Take a screenshot, look at it to find an element, then click it:
 
 ```bash
 SHOT=$(bash capture.sh | tail -1)
-python3 vision.py --image "$SHOT" --find "the clock in the panel" --json
-# Use the x/y from the output:
+# Look at the screenshot to find the clock in the panel
+# Estimate its coordinates, then click:
 bash click.sh --x <X> --y <Y>
 ```
 
@@ -74,4 +74,4 @@ Run the built-in test suite to verify everything works:
 bash test.sh
 ```
 
-If all tests pass, the skill is ready. You can now use it to automate any GUI task by following the capture-find-act-verify loop described in SKILL.md.
+If all tests pass, the skill is ready. You can now use it to automate any GUI task by following the capture-look-act-verify loop described in SKILL.md.

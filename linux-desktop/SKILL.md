@@ -3,15 +3,15 @@ name: linux-desktop
 description: >
   Control and automate the Linux desktop GUI on X11. Use this skill to take screenshots,
   find and click UI elements, type text, send keyboard shortcuts, scroll, manage windows
-  (focus, minimize, maximize, close, move, resize), and use vision AI to locate elements
-  by description. Requires X11 (not Wayland). Use for desktop automation, GUI testing,
+  (focus, minimize, maximize, close, move, resize), and use your own vision to locate elements
+  on screen. Requires X11 (not Wayland). Use for desktop automation, GUI testing,
   remote desktop control, and any task requiring interaction with graphical applications.
 metadata:
   clawdbot:
     emoji: "\U0001F5A5"
     os: ["linux"]
     requires:
-      bins: ["xdotool", "wmctrl", "scrot", "python3"]
+      bins: ["xdotool", "wmctrl", "scrot"]
       env: ["DISPLAY"]
     install:
       - id: apt
@@ -23,14 +23,14 @@ metadata:
 # Linux Desktop GUI Automation
 
 Automate any X11 Linux desktop: capture screens, find and click elements, type, use hotkeys,
-manage windows. For element finding, use vision.py to interpret screenshots.
+manage windows. To find UI elements, capture a screenshot and look at it yourself — you have
+vision and can read the image directly.
 
 ## Prerequisites
 
 - X11 session running (XFCE, GNOME on X11, KDE on X11, i3, openbox, etc.)
 - `DISPLAY` environment variable set (usually `:0`)
 - Run `bash install.sh` once to install dependencies
-- `ANTHROPIC_API_KEY` set for vision features
 
 ## Quick Reference
 
@@ -57,18 +57,16 @@ manage windows. For element finding, use vision.py to interpret screenshots.
 | Close window | `bash window.sh --action close --window "Firefox"` |
 | Move window | `bash window.sh --action move --window "Firefox" --x 100 --y 50` |
 | Resize window | `bash window.sh --action resize --window "Firefox" --width 1280 --height 800` |
-| Find UI element | `python3 vision.py --image /tmp/shot.png --find "Save button"` |
-| Describe screen | `python3 vision.py --image /tmp/shot.png --describe` |
 
 ## Typical Automation Workflow
 
 For most GUI automation tasks, follow this pattern:
 
 1. **Capture** a screenshot with `capture.sh` — note the file path printed
-2. **Inspect** what's on screen with `vision.py --describe` or `inspect.sh`
-3. **Find** the target element with `vision.py --find "description of element"`
-4. **Act** using the returned coordinates: `click.sh --x X --y Y`
-5. **Verify** by capturing another screenshot
+2. **Look** at the screenshot yourself to understand what's on screen
+3. **Find** the target element by examining the screenshot and estimating its pixel coordinates
+4. **Act** using the coordinates: `click.sh --x X --y Y`
+5. **Verify** by capturing another screenshot and checking the result
 
 ### Example: Click the Save button in a dialog
 
@@ -76,13 +74,11 @@ For most GUI automation tasks, follow this pattern:
 # Step 1: Capture the screen
 SCREENSHOT=$(bash capture.sh | tail -1)
 
-# Step 2: Find the Save button
-COORDS=$(python3 vision.py --image "$SCREENSHOT" --find "Save button" --json)
+# Step 2: Look at the screenshot (read the image file with your vision)
+# Examine the image and identify the Save button's position
 
-# Step 3: Extract coordinates and click
-X=$(echo "$COORDS" | python3 -c "import sys,json; print(json.load(sys.stdin)['x'])")
-Y=$(echo "$COORDS" | python3 -c "import sys,json; print(json.load(sys.stdin)['y'])")
-bash click.sh --x "$X" --y "$Y"
+# Step 3: Click at the coordinates you identified
+bash click.sh --x 450 --y 320
 ```
 
 ### Example: Type into a specific application
@@ -159,4 +155,3 @@ Combine with `+`: `ctrl+c`, `ctrl+shift+t`, `alt+F4`, `super+d`
 - Cannot interact with Wayland-native apps in a Wayland session
 - Some apps with custom rendering (games, Electron apps with security flags) may resist automation
 - Screenshot quality depends on compositor; disable compositing if captures look wrong
-- Vision features require ANTHROPIC_API_KEY to be set
