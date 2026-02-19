@@ -24,20 +24,6 @@ else
     exit 1
 fi
 
-# Install Python dependencies (PEP 668-safe) in a local virtual environment
-VENV_DIR="${PWD}/.venv"
-
-if command -v python3 >/dev/null 2>&1; then
-    echo "Setting up Python virtual environment at ${VENV_DIR} ..."
-    python3 -m venv "${VENV_DIR}"
-    "${VENV_DIR}/bin/pip" install --quiet --upgrade pip
-    "${VENV_DIR}/bin/pip" install --quiet anthropic pillow
-    echo "Python deps installed in venv."
-    echo "Use: source ${VENV_DIR}/bin/activate"
-else
-    echo "WARNING: python3 not found in PATH; skipping Python package install." >&2
-fi
-
 echo ""
 echo "Installation complete."
 echo "Test with: xdotool getactivewindow"
