@@ -1,5 +1,5 @@
 #!/bin/bash
-# test.sh — Basic end-to-end test for the linux-desktop skill
+# test.sh — Basic end-to-end test for the peekaboox skill
 # Verifies that tools are installed and core functions work
 set -e
 
@@ -23,7 +23,7 @@ skip() {
     SKIP=$((SKIP + 1))
 }
 
-echo "=== linux-desktop skill tests ==="
+echo "=== peekaboox skill tests ==="
 echo ""
 
 # --- Test 1: Check required commands ---

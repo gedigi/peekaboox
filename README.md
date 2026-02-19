@@ -1,4 +1,4 @@
-# linux-desktop — OpenClaw Linux GUI Automation Skill
+# peekaboox — OpenClaw Linux GUI Automation Skill
 
 Full GUI automation for Linux X11 desktops. This skill gives OpenClaw the ability to capture screenshots, inspect windows, click, type, send hotkeys, scroll, and manage windows.
 
@@ -61,7 +61,7 @@ bash test.sh
 Because this repo is dedicated to this single skill, use the repo root as the skill folder:
 
 ```bash
-cp -r <this-repo> ~/.openclaw/workspace/skills/linux-desktop/
+cp -r <this-repo> ~/.openclaw/workspace/skills/peekaboox/
 ```
 
 Restart the OpenClaw gateway; the agent will read `SKILL.md`.

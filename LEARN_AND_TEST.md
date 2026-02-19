@@ -1,6 +1,6 @@
-# Learn and Test the linux-desktop Skill
+# Learn and Test the peekaboox Skill
 
-You have a new skill called `linux-desktop` that lets you control the Linux GUI. Work through each step below to learn how it works. Run all commands from the skill directory.
+You have a new skill called `peekaboox` that lets you control the Linux GUI. Work through each step below to learn how it works. Run all commands from the skill directory.
 
 ## Setup
 

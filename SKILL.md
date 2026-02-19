@@ -1,5 +1,5 @@
 ---
-name: linux-desktop
+name: peekaboox
 description: >
   Control and automate the Linux desktop GUI on X11. Use this skill to take screenshots,
   find and click UI elements, type text, send keyboard shortcuts, scroll, manage windows
@@ -20,7 +20,7 @@ metadata:
         label: Install dependencies (apt/dnf/pacman)
 ---
 
-# Linux Desktop GUI Automation
+# peekaboox — Linux Desktop GUI Automation
 
 Automate any X11 Linux desktop: capture screens, find and click elements, type, use hotkeys,
 manage windows.

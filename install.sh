@@ -1,9 +1,9 @@
 #!/bin/bash
-# install.sh — Install dependencies for the linux-desktop OpenClaw skill
+# install.sh — Install dependencies for the peekaboox OpenClaw skill
 # Supports apt (Debian/Ubuntu), dnf (Fedora/RHEL), and pacman (Arch)
 set -e
 
-echo "Installing linux-desktop skill dependencies..."
+echo "Installing peekaboox skill dependencies..."
 
 # Warn if running under Wayland
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
