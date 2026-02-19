@@ -25,7 +25,7 @@ metadata:
 Automate any X11 Linux desktop: capture screens, find and click elements, type, use hotkeys,
 manage windows.
 
-Preferred screenshot interpretation path: capture with `capture.sh` and interpret the image directly in your OpenClaw chat (existing image-capable model connection). Use `vision.py` as optional fallback.
+Preferred screenshot interpretation path: capture with `capture.sh` and interpret the image directly in your OpenClaw chat (existing image-capable model connection).
 
 ## Prerequisites
 
@@ -33,7 +33,6 @@ Preferred screenshot interpretation path: capture with `capture.sh` and interpre
 - `DISPLAY` environment variable set (usually `:0`)
 - Run `bash install.sh` once to install dependencies
 - No extra key needed for screenshot interpretation when using OpenClaw's image-capable chat path
-- `ANTHROPIC_API_KEY` only if using `vision.py`
 
 ## Quick Reference
 
