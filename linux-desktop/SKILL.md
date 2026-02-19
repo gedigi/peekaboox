@@ -30,7 +30,7 @@ manage windows. For element finding, use vision.py to interpret screenshots.
 - X11 session running (XFCE, GNOME on X11, KDE on X11, i3, openbox, etc.)
 - `DISPLAY` environment variable set (usually `:0`)
 - Run `bash install.sh` once to install dependencies
-- `ANTHROPIC_API_KEY` set for vision features
+- `OPENAI_API_KEY` set for vision features
 
 ## Quick Reference
 
@@ -159,4 +159,4 @@ Combine with `+`: `ctrl+c`, `ctrl+shift+t`, `alt+F4`, `super+d`
 - Cannot interact with Wayland-native apps in a Wayland session
 - Some apps with custom rendering (games, Electron apps with security flags) may resist automation
 - Screenshot quality depends on compositor; disable compositing if captures look wrong
-- Vision features require ANTHROPIC_API_KEY to be set
+- Vision features require OPENAI_API_KEY to be set

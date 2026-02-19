@@ -25,7 +25,7 @@ else
 fi
 
 # Install Python dependencies
-pip3 install --quiet anthropic pillow
+pip3 install --quiet openai pillow
 
 echo ""
 echo "Installation complete."

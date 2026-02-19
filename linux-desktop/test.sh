@@ -81,10 +81,10 @@ fi
 # --- Test 5: Check Python dependencies for vision ---
 echo ""
 echo "[5/6] Checking Python dependencies for vision.py..."
-if python3 -c "import anthropic" 2>/dev/null; then
-    pass "anthropic package installed"
+if python3 -c "import openai" 2>/dev/null; then
+    pass "openai package installed"
 else
-    skip "anthropic package not installed (vision features unavailable)"
+    skip "openai package not installed (vision features unavailable)"
 fi
 if python3 -c "from PIL import Image" 2>/dev/null; then
     pass "Pillow package installed"

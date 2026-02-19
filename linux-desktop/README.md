@@ -8,7 +8,7 @@ This is the Linux equivalent of the macOS **Peekaboo** skill.
 
 - Linux with X11 session (XFCE, GNOME on X11, KDE on X11, i3, openbox, etc.)
 - `DISPLAY` environment variable set (usually `:0`)
-- `ANTHROPIC_API_KEY` for vision features
+- `OPENAI_API_KEY` for vision features
 
 ## Installation
 
@@ -17,7 +17,7 @@ cd linux-desktop/
 bash install.sh
 ```
 
-This installs: `xdotool`, `wmctrl`, `scrot`, `x11-utils`, `imagemagick`, `python3`, `pip3`, `anthropic`, `pillow`.
+This installs: `xdotool`, `wmctrl`, `scrot`, `x11-utils`, `imagemagick`, `python3`, `pip3`, `openai`, `pillow`.
 
 Supported package managers: apt (Debian/Ubuntu), dnf (Fedora/RHEL), pacman (Arch).
 
@@ -32,7 +32,7 @@ Supported package managers: apt (Debian/Ubuntu), dnf (Fedora/RHEL), pacman (Arch
 | `hotkey.sh` | Send keyboard shortcuts (ctrl+c, alt+F4, etc.) |
 | `scroll.sh` | Scroll up/down at current or specified position |
 | `window.sh` | Window management (focus, minimize, maximize, close, move, resize) |
-| `vision.py` | Use Claude vision API to find UI elements or describe the screen |
+| `vision.py` | Use GPT-4 Vision API to find UI elements or describe the screen |
 
 ## Quick Start
 
@@ -77,4 +77,4 @@ Restart the OpenClaw gateway. The agent will read `SKILL.md` to learn how to use
 
 - **X11 only** — does not work on Wayland sessions
 - Some applications with custom rendering may resist automation
-- Vision features require an Anthropic API key
+- Vision features require an OpenAI API key

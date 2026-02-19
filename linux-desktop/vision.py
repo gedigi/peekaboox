@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-vision.py — Use Claude's vision API to interpret screenshots and locate UI elements.
+vision.py — Use OpenAI's GPT-4 Vision API to interpret screenshots and locate UI elements.
 
 Usage:
     python3 vision.py --image /tmp/shot.png --find "the Save button"
@@ -15,11 +15,11 @@ import sys
 from pathlib import Path
 
 try:
-    import anthropic
+    from openai import OpenAI
 except ImportError:
     print(json.dumps({
         "success": False,
-        "error": "anthropic package not installed. Run: pip3 install anthropic"
+        "error": "openai package not installed. Run: pip3 install openai"
     }))
     sys.exit(1)
 
@@ -58,7 +58,7 @@ def get_media_type(image_path: str) -> str:
     return media_types.get(ext, "image/png")
 
 
-def find_element(client: anthropic.Anthropic, image_path: str, element_description: str) -> dict:
+def find_element(client: OpenAI, image_path: str, element_description: str) -> dict:
     """Find a UI element in a screenshot by description."""
     width, height = get_image_dimensions(image_path)
     image_data = encode_image(image_path)
@@ -77,19 +77,17 @@ def find_element(client: anthropic.Anthropic, image_path: str, element_descripti
         f"Return ONLY valid JSON, no other text."
     )
 
-    response = client.messages.create(
-        model="claude-sonnet-4-6",
+    response = client.chat.completions.create(
+        model="gpt-4o",
         max_tokens=512,
         messages=[
             {
                 "role": "user",
                 "content": [
                     {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
-                            "data": image_data,
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:{media_type};base64,{image_data}",
                         },
                     },
                     {
@@ -101,12 +99,11 @@ def find_element(client: anthropic.Anthropic, image_path: str, element_descripti
         ],
     )
 
-    response_text = response.content[0].text.strip()
+    response_text = response.choices[0].message.content.strip()
 
     # Try to parse JSON from the response (handle markdown code blocks)
     if response_text.startswith("```"):
         lines = response_text.split("\n")
-        # Remove first and last lines (``` markers)
         json_lines = []
         inside = False
         for line in lines:
@@ -128,7 +125,7 @@ def find_element(client: anthropic.Anthropic, image_path: str, element_descripti
     return result
 
 
-def describe_screen(client: anthropic.Anthropic, image_path: str) -> str:
+def describe_screen(client: OpenAI, image_path: str) -> str:
     """Describe what's visible on the screenshot."""
     image_data = encode_image(image_path)
     media_type = get_media_type(image_path)
@@ -138,19 +135,17 @@ def describe_screen(client: anthropic.Anthropic, image_path: str) -> str:
         "Include: what applications are open, what content is visible, any notable UI state."
     )
 
-    response = client.messages.create(
-        model="claude-sonnet-4-6",
+    response = client.chat.completions.create(
+        model="gpt-4o",
         max_tokens=512,
         messages=[
             {
                 "role": "user",
                 "content": [
                     {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
-                            "data": image_data,
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:{media_type};base64,{image_data}",
                         },
                     },
                     {
@@ -162,12 +157,12 @@ def describe_screen(client: anthropic.Anthropic, image_path: str) -> str:
         ],
     )
 
-    return response.content[0].text.strip()
+    return response.choices[0].message.content.strip()
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Use Claude vision to interpret screenshots and find UI elements"
+        description="Use GPT-4 Vision to interpret screenshots and find UI elements"
     )
     parser.add_argument("--image", required=True, help="Path to screenshot image file")
     parser.add_argument("--find", help="Description of the UI element to find")
@@ -189,9 +184,9 @@ def main():
         sys.exit(1)
 
     try:
-        client = anthropic.Anthropic()  # Reads ANTHROPIC_API_KEY from env
-    except anthropic.AuthenticationError:
-        error = {"success": False, "error": "ANTHROPIC_API_KEY not set or invalid"}
+        client = OpenAI()  # Reads OPENAI_API_KEY from env
+    except Exception:
+        error = {"success": False, "error": "OPENAI_API_KEY not set or invalid"}
         print(json.dumps(error))
         sys.exit(1)
 
@@ -222,16 +217,9 @@ def main():
             else:
                 print(description)
 
-    except anthropic.APIError as e:
-        error = {"found": False, "error": f"Anthropic API error: {str(e)}"}
-        print(json.dumps(error))
-        sys.exit(1)
-    except json.JSONDecodeError as e:
-        error = {"found": False, "error": f"Failed to parse vision response as JSON: {str(e)}"}
-        print(json.dumps(error))
-        sys.exit(1)
     except Exception as e:
-        error = {"found": False, "error": f"Unexpected error: {str(e)}"}
+        error_type = type(e).__name__
+        error = {"found": False, "error": f"{error_type}: {str(e)}"}
         print(json.dumps(error))
         sys.exit(1)
 
