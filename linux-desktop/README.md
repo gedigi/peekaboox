@@ -8,6 +8,8 @@ This is the Linux equivalent of the macOS **Peekaboo** skill.
 
 - Linux with X11 session (XFCE, GNOME on X11, KDE on X11, i3, openbox, etc.)
 - `DISPLAY` environment variable set (usually `:0`)
+- No extra key needed if you interpret screenshots with your existing OpenClaw image-capable model connection
+- `ANTHROPIC_API_KEY` only for `vision.py` fallback features
 
 ## Installation
 
@@ -16,7 +18,7 @@ cd linux-desktop/
 bash install.sh
 ```
 
-This installs: `xdotool`, `wmctrl`, `scrot`, `x11-utils`, `imagemagick`.
+This installs system dependencies (`xdotool`, `wmctrl`, `scrot`, `x11-utils`, `imagemagick`, Python) and creates a local `.venv` for Python deps (`anthropic`, `pillow`) to avoid PEP 668 issues on modern Debian/Ubuntu.
 
 Supported package managers: apt (Debian/Ubuntu), dnf (Fedora/RHEL), pacman (Arch).
 
@@ -52,9 +54,13 @@ bash type.sh "Hello world"
 # Send Ctrl+C
 bash hotkey.sh "ctrl+c"
 
-# Take a screenshot, then look at it yourself to find UI elements
+# Preferred: capture + interpret screenshot directly in your OpenClaw chat
 SHOT=$(bash capture.sh | tail -1)
-# (read the image file to identify element positions, then click)
+echo "$SHOT"
+
+# Optional fallback: use vision.py
+source .venv/bin/activate
+python3 vision.py --image "$SHOT" --find "Save button" --json
 ```
 
 ## Testing
@@ -77,3 +83,4 @@ Restart the OpenClaw gateway. The agent will read `SKILL.md` to learn how to use
 
 - **X11 only** — does not work on Wayland sessions
 - Some applications with custom rendering may resist automation
+- `vision.py` requires an Anthropic API key; screenshot interpretation in OpenClaw chat does not

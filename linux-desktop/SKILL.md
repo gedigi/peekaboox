@@ -23,14 +23,17 @@ metadata:
 # Linux Desktop GUI Automation
 
 Automate any X11 Linux desktop: capture screens, find and click elements, type, use hotkeys,
-manage windows. To find UI elements, capture a screenshot and look at it yourself — you have
-vision and can read the image directly.
+manage windows.
+
+Preferred screenshot interpretation path: capture with `capture.sh` and interpret the image directly in your OpenClaw chat (existing image-capable model connection). Use `vision.py` as optional fallback.
 
 ## Prerequisites
 
 - X11 session running (XFCE, GNOME on X11, KDE on X11, i3, openbox, etc.)
 - `DISPLAY` environment variable set (usually `:0`)
 - Run `bash install.sh` once to install dependencies
+- No extra key needed for screenshot interpretation when using OpenClaw's image-capable chat path
+- `ANTHROPIC_API_KEY` only if using `vision.py`
 
 ## Quick Reference
 
